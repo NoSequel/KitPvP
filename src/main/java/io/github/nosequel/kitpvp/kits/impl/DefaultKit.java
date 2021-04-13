@@ -47,7 +47,7 @@ public class DefaultKit extends Kit {
     @Override
     public ItemStack getSword() {
         return new ItemBuilder(Material.DIAMOND_SWORD)
-                .addEnchantment(Enchantment.DAMAGE_ALL, 2)
+                .addEnchantment(Enchantment.DAMAGE_ALL, 1)
                 .addEnchantment(Enchantment.DURABILITY, 5).get();
     }
 

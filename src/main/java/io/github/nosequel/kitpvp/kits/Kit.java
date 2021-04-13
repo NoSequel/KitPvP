@@ -1,5 +1,6 @@
 package io.github.nosequel.kitpvp.kits;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -7,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 @RequiredArgsConstructor
+@Getter
 public abstract class Kit {
 
     private final KitHandler kitHandler;
@@ -36,7 +38,7 @@ public abstract class Kit {
      *
      * @return the contents
      */
-    private ItemStack[] getContents() {
+    public ItemStack[] getContents() {
         final ItemStack[] items = new ItemStack[36];
 
         items[0] = this.getSword();

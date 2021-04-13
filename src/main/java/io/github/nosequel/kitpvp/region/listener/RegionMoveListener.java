@@ -1,5 +1,6 @@
 package io.github.nosequel.kitpvp.region.listener;
 
+import io.github.nosequel.kitpvp.KitPlugin;
 import io.github.nosequel.kitpvp.handler.HandlerManager;
 import io.github.nosequel.kitpvp.region.Region;
 import io.github.nosequel.kitpvp.region.RegionHandler;
@@ -10,22 +11,27 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-
-import java.util.HashSet;
-import java.util.Set;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 public class RegionMoveListener implements Listener {
 
     private final RegionHandler regionHandler;
-    private final Set<Player> damageProtected = new HashSet<>();
+    private final KitPlugin plugin;
 
-    public RegionMoveListener(HandlerManager handlerManager) {
-        this.regionHandler = handlerManager.find(RegionHandler.class);
+    public RegionMoveListener(KitPlugin plugin) {
+        this.plugin = plugin;
+        this.regionHandler = plugin.getHandler().find(RegionHandler.class);
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        this.damageProtected.add(event.getPlayer());
+        this.setProtected(event.getPlayer(), true);
+    }
+
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent event) {
+        this.setProtected(event.getPlayer(), !this.regionHandler.find(event.getPlayer().getLocation()).isDamage());
     }
 
     @EventHandler
@@ -38,11 +44,12 @@ public class RegionMoveListener implements Listener {
         if (!regionFrom.equals(regionTo)) {
             if (regionFrom.isDamage() && !regionTo.isDamage()) {
                 player.sendMessage(ChatColor.GRAY + "You are now protected");
-                this.damageProtected.add(player);
+
+                this.setProtected(player, true);
                 return;
             }
 
-            if (this.damageProtected.contains(player) && regionTo.isDamage() && !regionFrom.isDamage()) {
+            if (this.isProtected(player) && regionTo.isDamage() && !regionFrom.isDamage()) {
                 player.sendMessage(ChatColor.GRAY + "You are no longer protected.");
             }
         }
@@ -53,15 +60,37 @@ public class RegionMoveListener implements Listener {
         if (event.getEntity() instanceof Player) {
             final Player player = (Player) event.getEntity();
 
-            if (this.damageProtected.contains(player)) {
+            if(this.isProtected(player)) {
                 if (this.regionHandler.find(player.getLocation()).isDamage()) {
                     if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
-                        this.damageProtected.remove(player);
+                        this.setProtected(player, false);
                     }
-
-                    event.setCancelled(true);
                 }
+
+                event.setCancelled(true);
             }
         }
     }
+
+    /**
+     * Check if a player has spawn protection
+     *
+     * @param player the player to check
+     * @return whether the player has spawn protection or not
+     */
+    private boolean isProtected(Player player) {
+        return player.getMetadata("protected").iterator().next().asBoolean();
+    }
+
+    /**
+     * Set the state of a player's protection
+     *
+     * @param player     the player to update
+     * @param protection the state of the protection
+     */
+    private void setProtected(Player player, boolean protection) {
+        player.removeMetadata("protected", this.plugin);
+        player.setMetadata("protected", new FixedMetadataValue(this.plugin, protection));
+    }
+
 }

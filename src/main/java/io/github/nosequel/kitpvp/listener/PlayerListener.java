@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import java.util.logging.Level;
 
@@ -40,8 +41,8 @@ public class PlayerListener implements Listener {
     }
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent event) {
-        final Player player = event.getEntity();
+    public void onRespawn(PlayerRespawnEvent event) {
+        final Player player = event.getPlayer();
         final Loadout loadout = this.loadoutHandler.find(LoadoutType.SPAWN);
 
         if (loadout.getLoadoutType().equals(LoadoutType.UNIDENTIFIED)) {
