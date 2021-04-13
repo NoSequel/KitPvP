@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.HashSet;
@@ -20,6 +21,11 @@ public class RegionMoveListener implements Listener {
 
     public RegionMoveListener(HandlerManager handlerManager) {
         this.regionHandler = handlerManager.find(RegionHandler.class);
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent event) {
+        this.damageProtected.add(event.getPlayer());
     }
 
     @EventHandler

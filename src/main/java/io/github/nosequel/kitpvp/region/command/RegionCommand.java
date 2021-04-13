@@ -23,7 +23,6 @@ public class RegionCommand {
                 ChatColor.RED + "/region delete <region>",
                 ChatColor.RED + "/region select <region>",
                 ChatColor.RED + "/region damage <region> <true|false>",
-                ChatColor.RED + "/region graceperiod <region> <true|false>",
                 ChatColor.BLUE + ChatColor.STRIKETHROUGH.toString() + StringUtils.repeat("-", 52),
         });
     }
@@ -58,7 +57,6 @@ public class RegionCommand {
                 ChatColor.GRAY + " - " + ChatColor.GREEN + "Left-click a block to set the first location,",
                 ChatColor.GRAY + " - " + ChatColor.GREEN + "Right-click a block to set the second location,",
                 ChatColor.GRAY + " - " + ChatColor.GREEN + "Shift-left-click a block to finish the selection,",
-                ChatColor.GRAY + "To cancel your mine selection task, execute \"/mine cancelselect\"",
                 ""
         });
     }
@@ -68,12 +66,5 @@ public class RegionCommand {
     public void damage(Player player, Region region, Boolean toggled) {
         region.setDamage(toggled);
         player.sendMessage(ChatColor.GOLD + "You have toggled the damage state of the region to " + ChatColor.RED + toggled);
-    }
-
-    @Command(labels = "region graceperiod", description = "Toggle the grace period of the region")
-    @PermissionNode("region.graceperiod")
-    public void graceperiod(Player player, Region region, Boolean toggled) {
-        region.setGracePeriod(toggled);
-        player.sendMessage(ChatColor.GOLD + "You have toggled the grace period state of the region to " + ChatColor.RED + toggled);
     }
 }
