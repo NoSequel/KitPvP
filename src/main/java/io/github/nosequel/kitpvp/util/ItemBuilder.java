@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -28,6 +29,7 @@ public class ItemBuilder {
     private Material type;
 
     private Consumer<PlayerInteractEvent> action;
+    private Player target;
 
     /**
      * Constructor to make a new item builder object
@@ -88,10 +90,12 @@ public class ItemBuilder {
      * Set the click action of the item
      *
      * @param action the click action
+     * @param target the player who the action is for
      * @return the current item builder instance
      */
-    public ItemBuilder setAction(Consumer<PlayerInteractEvent> action) {
+    public ItemBuilder setAction(Consumer<PlayerInteractEvent> action, Player target) {
         this.action = action;
+        this.target = target;
         return this;
     }
 
@@ -115,18 +119,18 @@ public class ItemBuilder {
             );
         }
 
-        if(!this.enchantments.isEmpty()) {
+        if (!this.enchantments.isEmpty()) {
             for (Map.Entry<Enchantment, Integer> entry : this.enchantments.entrySet()) {
                 item.addUnsafeEnchantment(entry.getKey(), entry.getValue());
             }
         }
 
-        if(this.action != null) {
+        if (this.action != null) {
             Bukkit.getPluginManager().registerEvents(new Listener() {
 
                 @EventHandler
                 public void onClick(PlayerInteractEvent event) {
-                    if(event.getItem() != null && event.getItem().isSimilar(item)) {
+                    if (event.getItem() != null && event.getItem().isSimilar(item) && event.getPlayer().equals(target)) {
                         action.accept(event);
                     }
                 }

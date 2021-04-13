@@ -38,9 +38,8 @@ public class ScoreboardProvider implements ScoreboardElementHandler {
         element.add(ChatColor.DARK_RED + "Killstreak: " + ChatColor.YELLOW + 0);
 
         if(kitHandler != null) {
-            this.kitHandler.find(player).ifPresent(kit -> element.getLines().addAll(Arrays.asList(
-                    "",
-                    ChatColor.DARK_RED + "Kit: " + ChatColor.YELLOW + kit.getKitName()))
+            this.kitHandler.find(player).ifPresent(kit ->
+                    element.add(ChatColor.DARK_RED + "Kit: " + ChatColor.YELLOW + kit.getKitName())
             );
         }
 

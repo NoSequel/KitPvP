@@ -6,6 +6,8 @@ import io.github.nosequel.kitpvp.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class DefaultKit extends Kit {
 
@@ -57,22 +59,10 @@ public class DefaultKit extends Kit {
     @Override
     public ItemStack[] getArmor() {
         return new ItemStack[]{
-                new ItemBuilder(Material.DIAMOND_BOOTS)
-                        .addEnchantment(Enchantment.DURABILITY, 5)
-                        .addEnchantment(Enchantment.PROTECTION_FALL, 3)
-                        .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).get(),
-
-                new ItemBuilder(Material.DIAMOND_LEGGINGS)
-                        .addEnchantment(Enchantment.DURABILITY, 5)
-                        .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).get(),
-
-                new ItemBuilder(Material.DIAMOND_CHESTPLATE)
-                        .addEnchantment(Enchantment.DURABILITY, 5)
-                        .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).get(),
-
-                new ItemBuilder(Material.DIAMOND_HELMET)
-                        .addEnchantment(Enchantment.DURABILITY, 5)
-                        .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).get(),
+                new ItemStack(Material.IRON_BOOTS),
+                new ItemStack(Material.IRON_LEGGINGS),
+                new ItemStack(Material.IRON_CHESTPLATE),
+                new ItemStack(Material.IRON_HELMET)
         };
     }
 
@@ -94,5 +84,17 @@ public class DefaultKit extends Kit {
     @Override
     public ItemStack getIcon() {
         return new ItemStack(Material.DIAMOND_SWORD);
+    }
+
+    /**
+     * Get the effects to give to the player on equip
+     *
+     * @return the potion effects
+     */
+    @Override
+    public PotionEffect[] getPotionEffects() {
+        return new PotionEffect[] {
+                new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1)
+        };
     }
 }

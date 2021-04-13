@@ -91,6 +91,12 @@
             <artifactId>lombok</artifactId>
             <version>1.18.16</version>
         </dependency>
+
+        <dependency>
+            <groupId>me.blazingtide</groupId>
+            <artifactId>Zetsu</artifactId>
+            <version>dc684a7b0b</version>
+        </dependency>
     </dependencies>
 
 </project>

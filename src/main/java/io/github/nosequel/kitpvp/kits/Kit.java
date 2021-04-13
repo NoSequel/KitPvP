@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 
 @RequiredArgsConstructor
 public abstract class Kit {
@@ -24,6 +25,10 @@ public abstract class Kit {
         player.getInventory().setContents(this.getContents());
 
         this.kitHandler.getEquipped().put(player.getUniqueId(), this);
+
+        for (PotionEffect effect : this.getPotionEffects()) {
+            player.addPotionEffect(effect);
+        }
     }
 
     /**
@@ -86,5 +91,12 @@ public abstract class Kit {
      * @return the icon
      */
     public abstract ItemStack getIcon();
+
+    /**
+     * Get the effects to give to the player on equip
+     *
+     * @return the potion effects
+     */
+    public abstract PotionEffect[] getPotionEffects();
 
 }

@@ -47,7 +47,7 @@ public class SpawnLoadout extends Loadout {
                 null,
                 new ItemBuilder(Material.WATCH)
                         .setDisplayName(ChatColor.GOLD + "Select a Kit")
-                        .setAction(event -> new KitSelectorMenu(player, this.kitHandler).updateMenu()).get(),
+                        .setAction(event -> new KitSelectorMenu(player, this.kitHandler).updateMenu(), player).get(),
         });
     }
 }
