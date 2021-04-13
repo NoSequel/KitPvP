@@ -1,10 +1,14 @@
 package io.github.nosequel.kitpvp.kits;
 
+import lombok.RequiredArgsConstructor;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+@RequiredArgsConstructor
 public abstract class Kit {
+
+    private final KitHandler kitHandler;
 
     /**
      * Equip the kit to a player
@@ -14,10 +18,12 @@ public abstract class Kit {
     public void equip(Player player) {
         player.sendMessage(ChatColor.YELLOW + "You have equipped the " + ChatColor.GREEN + this.getKitName() + ChatColor.YELLOW + " kit.");
         player.getInventory().clear();
-        player.getInventory().setArmorContents(new ItemStack[] { null, null, null, null });
+        player.getInventory().setArmorContents(new ItemStack[]{null, null, null, null});
 
         player.getInventory().setArmorContents(this.getArmor());
         player.getInventory().setContents(this.getContents());
+
+        this.kitHandler.getEquipped().put(player.getUniqueId(), this);
     }
 
     /**
@@ -26,12 +32,12 @@ public abstract class Kit {
      * @return the contents
      */
     private ItemStack[] getContents() {
-        final ItemStack[] items = new ItemStack[27];
+        final ItemStack[] items = new ItemStack[36];
 
         items[0] = this.getSword();
 
-        for(int i = 0; i < items.length; i++) {
-            if(items[i] == null) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] == null) {
                 items[i] = this.getHealthType();
             }
         }
@@ -73,5 +79,12 @@ public abstract class Kit {
      * @return the item
      */
     public abstract ItemStack getHealthType();
+
+    /**
+     * Get the icon to display inside of the kit selector
+     *
+     * @return the icon
+     */
+    public abstract ItemStack getIcon();
 
 }

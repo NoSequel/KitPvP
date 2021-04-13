@@ -1,18 +1,21 @@
 package io.github.nosequel.kitpvp.listener;
 
 import io.github.nosequel.kitpvp.handler.HandlerManager;
-import io.github.nosequel.kitpvp.kits.Kit;
-import io.github.nosequel.kitpvp.kits.KitHandler;
+import io.github.nosequel.kitpvp.loadout.Loadout;
+import io.github.nosequel.kitpvp.loadout.LoadoutHandler;
+import io.github.nosequel.kitpvp.loadout.LoadoutType;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.Optional;
+import java.util.logging.Level;
 
 public class PlayerListener implements Listener {
 
-    private final KitHandler kitHandler;
+    private final LoadoutHandler loadoutHandler;
 
     /**
      * Constructor to make a new player listener instance
@@ -20,14 +23,32 @@ public class PlayerListener implements Listener {
      * @param handlerManager the manager to get the handlers from
      */
     public PlayerListener(HandlerManager handlerManager) {
-        this.kitHandler = handlerManager.find(KitHandler.class);
+        this.loadoutHandler = handlerManager.find(LoadoutHandler.class);
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
-        final Optional<Kit> kit = this.kitHandler.getKits().stream().findFirst();
+        final Loadout loadout = this.loadoutHandler.find(LoadoutType.SPAWN);
 
-        kit.ifPresent(value -> value.equip(player));
+        if (loadout.getLoadoutType().equals(LoadoutType.UNIDENTIFIED)) {
+            Bukkit.getLogger().log(Level.WARNING, "Unable to find loadout with type SPAWN");
+        }
+
+        loadout.equipLoadout(player);
+        player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        final Player player = event.getEntity();
+        final Loadout loadout = this.loadoutHandler.find(LoadoutType.SPAWN);
+
+        if (loadout.getLoadoutType().equals(LoadoutType.UNIDENTIFIED)) {
+            Bukkit.getLogger().log(Level.WARNING, "Unable to find loadout with type SPAWN");
+        }
+
+        loadout.equipLoadout(player);
+        player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
     }
 }

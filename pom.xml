@@ -65,19 +65,25 @@
         <dependency>
             <groupId>com.github.NoSequel.TabAPI</groupId>
             <artifactId>v1_7_R4</artifactId>
-            <version>7e520c29f3</version>
+            <version>a086154966</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.NoSequel.TabAPI</groupId>
             <artifactId>shared</artifactId>
-            <version>5508758503</version>
+            <version>a086154966</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.NoSequel</groupId>
             <artifactId>ScoreboardAPI</artifactId>
             <version>f07006f09f</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.NoSequel</groupId>
+            <artifactId>Katakuna</artifactId>
+            <version>b3434f4d8f</version>
         </dependency>
 
         <dependency>

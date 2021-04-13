@@ -1,12 +1,17 @@
 package io.github.nosequel.kitpvp.kits.impl;
 
 import io.github.nosequel.kitpvp.kits.Kit;
+import io.github.nosequel.kitpvp.kits.KitHandler;
 import io.github.nosequel.kitpvp.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
 public class DefaultKit extends Kit {
+
+    public DefaultKit(KitHandler kitHandler) {
+        super(kitHandler);
+    }
 
     /**
      * Get the name of the kit
@@ -52,7 +57,12 @@ public class DefaultKit extends Kit {
     @Override
     public ItemStack[] getArmor() {
         return new ItemStack[]{
-                new ItemBuilder(Material.DIAMOND_HELMET)
+                new ItemBuilder(Material.DIAMOND_BOOTS)
+                        .addEnchantment(Enchantment.DURABILITY, 5)
+                        .addEnchantment(Enchantment.PROTECTION_FALL, 3)
+                        .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).get(),
+
+                new ItemBuilder(Material.DIAMOND_LEGGINGS)
                         .addEnchantment(Enchantment.DURABILITY, 5)
                         .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).get(),
 
@@ -60,14 +70,9 @@ public class DefaultKit extends Kit {
                         .addEnchantment(Enchantment.DURABILITY, 5)
                         .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).get(),
 
-                new ItemBuilder(Material.DIAMOND_LEGGINGS)
+                new ItemBuilder(Material.DIAMOND_HELMET)
                         .addEnchantment(Enchantment.DURABILITY, 5)
                         .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).get(),
-
-                new ItemBuilder(Material.DIAMOND_BOOTS)
-                        .addEnchantment(Enchantment.DURABILITY, 5)
-                        .addEnchantment(Enchantment.PROTECTION_FALL, 3)
-                        .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).get()
         };
     }
 
@@ -79,5 +84,15 @@ public class DefaultKit extends Kit {
     @Override
     public ItemStack getHealthType() {
         return new ItemStack(Material.MUSHROOM_SOUP);
+    }
+
+    /**
+     * Get the icon to display inside of the kit selector
+     *
+     * @return the icon
+     */
+    @Override
+    public ItemStack getIcon() {
+        return new ItemStack(Material.DIAMOND_SWORD);
     }
 }
