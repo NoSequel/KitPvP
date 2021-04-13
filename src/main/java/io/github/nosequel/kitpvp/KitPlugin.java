@@ -2,12 +2,17 @@ package io.github.nosequel.kitpvp;
 
 import io.github.nosequel.kitpvp.handler.Handler;
 import io.github.nosequel.kitpvp.handler.HandlerManager;
+import io.github.nosequel.kitpvp.killstreak.KillstreakHandler;
 import io.github.nosequel.kitpvp.kits.KitHandler;
 import io.github.nosequel.kitpvp.listener.DeathListener;
 import io.github.nosequel.kitpvp.listener.HealthListener;
+import io.github.nosequel.kitpvp.killstreak.listener.KillstreakListener;
 import io.github.nosequel.kitpvp.listener.KitListener;
 import io.github.nosequel.kitpvp.listener.PlayerListener;
 import io.github.nosequel.kitpvp.loadout.LoadoutHandler;
+import io.github.nosequel.kitpvp.profile.Profile;
+import io.github.nosequel.kitpvp.profile.ProfileHandler;
+import io.github.nosequel.kitpvp.profile.listener.ProfileListener;
 import io.github.nosequel.kitpvp.region.Region;
 import io.github.nosequel.kitpvp.region.RegionHandler;
 import io.github.nosequel.kitpvp.region.command.RegionCommand;
@@ -33,18 +38,24 @@ public class KitPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         ConfigurationSerialization.registerClass(Region.class);
+        ConfigurationSerialization.registerClass(Profile.class);
 
         this.handler.register(new KitHandler(this));
         this.handler.register(new LoadoutHandler(this.handler));
         this.handler.register(new RegionHandler(this));
+        this.handler.register(new ProfileHandler(this));
+        this.handler.register(new KillstreakHandler());
 
-        Bukkit.getPluginManager().registerEvents(new PlayerListener(this.handler), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
         Bukkit.getPluginManager().registerEvents(new KitListener(this.handler), this);
         Bukkit.getPluginManager().registerEvents(new HealthListener(), this);
         Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
+        Bukkit.getPluginManager().registerEvents(new KillstreakListener(this.handler), this);
 
         Bukkit.getPluginManager().registerEvents(new RegionMoveListener(this), this);
         Bukkit.getPluginManager().registerEvents(new RegionSelectionListener(this.handler.find(RegionHandler.class)), this);
+
+        Bukkit.getPluginManager().registerEvents(new ProfileListener(this.handler), this);
 
         new ScoreboardHandler(this, new ScoreboardProvider(this.handler), 2L);
         new TabHandler(new v1_7_R4TabAdapter(), new TablistProvider(this.handler), this, 5L);

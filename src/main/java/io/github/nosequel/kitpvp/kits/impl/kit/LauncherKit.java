@@ -47,11 +47,9 @@ public class LauncherKit extends AbilityKit {
     @Override
     public String[] getDescription() {
         return new String[]{
-                "The launcher kit is",
-                "a kit which launches",
-                "everyone within a 8",
-                "block radius up into",
-                "the air."
+                "The launcher kit is a kit which",
+                "launches everyone within a 8-",
+                "block radius up into the air.",
         };
     }
 

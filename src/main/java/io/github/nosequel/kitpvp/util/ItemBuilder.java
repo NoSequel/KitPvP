@@ -38,7 +38,6 @@ public class ItemBuilder {
      */
     public ItemBuilder(Material material) {
         this.type = material;
-        this.displayName = material.name();
     }
 
     /**
@@ -110,6 +109,7 @@ public class ItemBuilder {
 
         if (this.displayName != null) {
             meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName));
+            item.setItemMeta(meta);
         }
 
         if (this.lore != null) {
@@ -117,6 +117,7 @@ public class ItemBuilder {
                     .map(lore -> ChatColor.translateAlternateColorCodes('&', lore))
                     .collect(Collectors.toList())
             );
+            item.setItemMeta(meta);
         }
 
         if (!this.enchantments.isEmpty()) {

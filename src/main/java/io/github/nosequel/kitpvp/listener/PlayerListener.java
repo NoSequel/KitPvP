@@ -1,6 +1,6 @@
 package io.github.nosequel.kitpvp.listener;
 
-import io.github.nosequel.kitpvp.handler.HandlerManager;
+import io.github.nosequel.kitpvp.KitPlugin;
 import io.github.nosequel.kitpvp.loadout.Loadout;
 import io.github.nosequel.kitpvp.loadout.LoadoutHandler;
 import io.github.nosequel.kitpvp.loadout.LoadoutType;
@@ -8,7 +8,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
@@ -21,10 +20,10 @@ public class PlayerListener implements Listener {
     /**
      * Constructor to make a new player listener instance
      *
-     * @param handlerManager the manager to get the handlers from
+     * @param plugin the manager to get the handlers from
      */
-    public PlayerListener(HandlerManager handlerManager) {
-        this.loadoutHandler = handlerManager.find(LoadoutHandler.class);
+    public PlayerListener(KitPlugin plugin) {
+        this.loadoutHandler = plugin.getHandler().find(LoadoutHandler.class);
     }
 
     @EventHandler

@@ -24,13 +24,13 @@ public class TablistProvider implements TabElementHandler {
     public TabElement getElement(Player player) {
         final TabElement element = new TabElement();
 
-        element.add(1, 0, ChatColor.GOLD + "Vapor.RIP");
+        element.add(1, 0, ChatColor.DARK_AQUA + "Vapor.RIP");
         element.add(1, 1, ChatColor.WHITE.toString() + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers());
 
-        element.add(0, 0, ChatColor.GOLD + "Current Kit");
+        element.add(0, 0, ChatColor.DARK_AQUA + "Current Kit");
         element.add(0, 1, this.kitHandler.find(player).isPresent() ? this.kitHandler.find(player).get().getKitName() : "None");
 
-        element.add(2, 0, ChatColor.GOLD + "Current Killstreak");
+        element.add(2, 0, ChatColor.DARK_AQUA + "Current Killstreak");
         element.add(2, 1, "0");
 
         element.add(12, ChatColor.GRAY + "*" + ChatColor.RESET + player.getPlayerListName(), PingUtil.getPing(player), SkinUtil.getSkinDataThrown(player.getUniqueId()));
@@ -43,7 +43,7 @@ public class TablistProvider implements TabElementHandler {
                     index += 1;
                 }
 
-                element.add(index + 12, target.getPlayerListName(), PingUtil.getPing(target), SkinUtil.getSkinDataThrown(player.getUniqueId()));
+                element.add(index + 12, target.getPlayerListName(), PingUtil.getPing(target), SkinUtil.getSkinDataThrown(target.getUniqueId()));
                 index++;
             }
         }
