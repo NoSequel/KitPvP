@@ -1,8 +1,43 @@
 package io.github.nosequel.kitpvp.kits;
 
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class Kit {
+
+    /**
+     * Equip the kit to a player
+     *
+     * @param player the player to equip it to
+     */
+    public void equip(Player player) {
+        player.sendMessage(ChatColor.YELLOW + "You have equipped the " + ChatColor.GREEN + this.getKitName() + ChatColor.YELLOW + " kit.");
+        player.getInventory().clear();
+        player.getInventory().setArmorContents(new ItemStack[] { null, null, null, null });
+
+        player.getInventory().setArmorContents(this.getArmor());
+        player.getInventory().setContents(this.getContents());
+    }
+
+    /**
+     * Get the contents to give to the player
+     *
+     * @return the contents
+     */
+    private ItemStack[] getContents() {
+        final ItemStack[] items = new ItemStack[27];
+
+        items[0] = this.getSword();
+
+        for(int i = 0; i < items.length; i++) {
+            if(items[i] == null) {
+                items[i] = this.getHealthType();
+            }
+        }
+
+        return items;
+    }
 
     /**
      * Get the name of the kit

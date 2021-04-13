@@ -1,0 +1,4 @@
+name: KitPvP
+version: /home/blueberry/.projects/KitPvP
+main: io.github.nosequel.kitpvp.KitPlugin
+author: NV6

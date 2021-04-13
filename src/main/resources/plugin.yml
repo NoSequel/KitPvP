@@ -1,0 +1,4 @@
+name: KitPvP
+version: ${pom.basedir}
+main: io.github.nosequel.kitpvp.KitPlugin
+author: NV6
