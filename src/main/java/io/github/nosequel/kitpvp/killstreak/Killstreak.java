@@ -29,6 +29,6 @@ public interface Killstreak {
      * @param player the player
      */
     default void handle(Player player) {
-        Bukkit.broadcastMessage(ChatColor.WHITE + player.getName() + ChatColor.YELLOW + " has reached the " + ChatColor.WHITE + this.getKillstreakName() + " killstreak.");
+        Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + player.getName() + ChatColor.YELLOW + " has reached the " + ChatColor.LIGHT_PURPLE + this.getKillstreakName() + ChatColor.YELLOW + " killstreak.");
     }
 }

@@ -1,7 +1,6 @@
 package io.github.nosequel.kitpvp.region.listener;
 
 import io.github.nosequel.kitpvp.KitPlugin;
-import io.github.nosequel.kitpvp.handler.HandlerManager;
 import io.github.nosequel.kitpvp.region.Region;
 import io.github.nosequel.kitpvp.region.RegionHandler;
 import org.bukkit.ChatColor;
@@ -31,7 +30,7 @@ public class RegionMoveListener implements Listener {
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
-        this.setProtected(event.getPlayer(), !this.regionHandler.find(event.getPlayer().getLocation()).isDamage());
+        this.setProtected(event.getPlayer(), true);
     }
 
     @EventHandler
@@ -60,11 +59,9 @@ public class RegionMoveListener implements Listener {
         if (event.getEntity() instanceof Player) {
             final Player player = (Player) event.getEntity();
 
-            if(this.isProtected(player)) {
+            if (this.isProtected(player)) {
                 if (this.regionHandler.find(player.getLocation()).isDamage()) {
-                    if (event.getCause().equals(EntityDamageEvent.DamageCause.FALL)) {
-                        this.setProtected(player, false);
-                    }
+                    this.setProtected(player, false);
                 }
 
                 event.setCancelled(true);

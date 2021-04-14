@@ -28,12 +28,7 @@ public class KillstreakListener implements Listener {
         final Profile playerProfile = this.profileHandler.findOrMake(player.getUniqueId(), player.getName());
 
         if (killer != null) {
-            final Profile killerProfile = this.profileHandler.findOrMake(killer.getUniqueId(), killer.getName());
-
-            this.killstreakHandler.handleKill(killerProfile);
-
-            killerProfile.addExperience(50);
-            killerProfile.getPlayer().sendMessage(ChatColor.GRAY + ChatColor.ITALIC.toString() + "You have gained 50 experience.");
+            this.killstreakHandler.handleKill(this.profileHandler.findOrMake(killer.getUniqueId(), killer.getName()));
         }
 
         playerProfile.setKillstreak(0);

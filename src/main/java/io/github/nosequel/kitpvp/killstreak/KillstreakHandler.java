@@ -16,7 +16,12 @@ import java.util.Optional;
 public class KillstreakHandler implements Handler {
 
     private final List<Killstreak> killstreaks = new ArrayList<>(Arrays.asList(
-            new ItemKillstreak(new ItemStack[]{new ItemBuilder(Material.WATCH).setDisplayName(ChatColor.YELLOW + "Select a Kit").get()}, "Kit Resetter", 5)
+            new ItemKillstreak(new ItemStack[]{new ItemBuilder(Material.WATCH)
+                    .setDisplayName(ChatColor.YELLOW + "Select a Kit")
+                    .get()},
+                    "Kit Resetter",
+                    5
+            )
     ));
 
 

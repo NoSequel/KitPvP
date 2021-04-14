@@ -26,7 +26,7 @@ public class LevelHandler implements Handler {
      * @param profile the profile to get the exp and level from
      * @return the required experience
      */
-    public double getNextLevelExperience(Profile profile) {
-        return (this.experienceRequired*this.getLevel(profile)) - profile.getExperience();
+    public int getNextLevelExperience(Profile profile) {
+        return -(profile.getExperience() - (this.getLevel(profile)+1)*this.experienceRequired);
     }
 }

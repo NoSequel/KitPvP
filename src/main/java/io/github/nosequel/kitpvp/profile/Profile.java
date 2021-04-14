@@ -22,6 +22,8 @@ public class Profile implements ConfigurationSerializable {
     private int killstreak;
     private int highestKillstreak;
 
+    private int level;
+
     /**
      * Constructor to make a new profile object
      *
@@ -86,6 +88,8 @@ public class Profile implements ConfigurationSerializable {
             put("experience", experience);
 
             put("highestKillstreak", highestKillstreak);
+
+            put("level", level);
         }};
     }
 
@@ -108,6 +112,7 @@ public class Profile implements ConfigurationSerializable {
 
         profile.setExperience((Integer) args.getOrDefault("experience", 0));
         profile.setHighestKillstreak((Integer) args.getOrDefault("highestKillstreak", 0));
+        profile.setLevel((Integer) args.getOrDefault("level", 0));
 
         return profile;
     }

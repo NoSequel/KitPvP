@@ -4,6 +4,8 @@ import io.github.nosequel.kitpvp.handler.Handler;
 import io.github.nosequel.kitpvp.handler.HandlerManager;
 import io.github.nosequel.kitpvp.killstreak.KillstreakHandler;
 import io.github.nosequel.kitpvp.kits.KitHandler;
+import io.github.nosequel.kitpvp.level.LevelHandler;
+import io.github.nosequel.kitpvp.level.listener.LevelListener;
 import io.github.nosequel.kitpvp.listener.DeathListener;
 import io.github.nosequel.kitpvp.listener.HealthListener;
 import io.github.nosequel.kitpvp.killstreak.listener.KillstreakListener;
@@ -45,6 +47,7 @@ public class KitPlugin extends JavaPlugin {
         this.handler.register(new RegionHandler(this));
         this.handler.register(new ProfileHandler(this));
         this.handler.register(new KillstreakHandler());
+        this.handler.register(new LevelHandler());
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
         Bukkit.getPluginManager().registerEvents(new KitListener(this.handler), this);
@@ -54,6 +57,8 @@ public class KitPlugin extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new RegionMoveListener(this), this);
         Bukkit.getPluginManager().registerEvents(new RegionSelectionListener(this.handler.find(RegionHandler.class)), this);
+
+        Bukkit.getPluginManager().registerEvents(new LevelListener(this.handler), this);
 
         Bukkit.getPluginManager().registerEvents(new ProfileListener(this.handler), this);
 
