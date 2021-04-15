@@ -29,7 +29,7 @@ public class IntoxicatorKit extends AbilityKit {
     @Override
     public Ability[] getAbilities() {
         return new Ability[]{
-            new IntoxicatorAbility(getKitHandler())
+                new IntoxicatorAbility(getKitHandler())
         };
     }
 
@@ -114,5 +114,15 @@ public class IntoxicatorKit extends AbilityKit {
         return new PotionEffect[]{
                 new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1)
         };
+    }
+
+    /**
+     * Get the level required to access the kit
+     *
+     * @return the required level
+     */
+    @Override
+    public int getRequiredLevel() {
+        return 1;
     }
 }

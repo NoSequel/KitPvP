@@ -101,4 +101,11 @@ public abstract class Kit {
      */
     public abstract PotionEffect[] getPotionEffects();
 
+    /**
+     * Get the level required to access the kit
+     *
+     * @return the required level
+     */
+    public abstract int getRequiredLevel();
+
 }

@@ -97,4 +97,14 @@ public class DefaultKit extends Kit {
                 new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1)
         };
     }
+
+    /**
+     * Get the level required to access the kit
+     *
+     * @return the required level
+     */
+    @Override
+    public int getRequiredLevel() {
+        return 0;
+    }
 }
