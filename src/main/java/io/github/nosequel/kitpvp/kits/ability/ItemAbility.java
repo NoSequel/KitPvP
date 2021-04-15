@@ -18,6 +18,7 @@ public abstract class ItemAbility extends ListenerAbility {
 
         if (this.isEquipped(player) && event.getItem() != null && event.getItem().getType().equals(this.getMaterial())) {
             this.handle(player);
+            event.setCancelled(true);
         }
     }
     /**
