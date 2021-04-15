@@ -33,7 +33,7 @@ public class IntoxicatorAbility extends ItemAbility {
                 target.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 12 * 20, 4));
                 target.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 12 * 20, 4));
 
-                target.sendMessage(ChatColor.GRAY + ChatColor.ITALIC.toString() + "You have been hit by an intoxicator...");
+                target.sendMessage(ChatColor.GRAY + ChatColor.ITALIC.toString() + "You have been intoxicated...");
             }
         }
 
