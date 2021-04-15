@@ -26,7 +26,7 @@ public abstract class AbilityKit extends Kit {
 
         items[0] = this.getSword();
 
-        for(byte i = 0; i < this.getAbilities().length; i++) {
+        for(int i = 0; i < this.getAbilities().length; i++) {
             final Ability ability = this.getAbilities()[i];
 
             if (ability instanceof ItemAbility) {
@@ -34,7 +34,7 @@ public abstract class AbilityKit extends Kit {
             }
         }
 
-        for (byte i = 0; i < items.length; i++) {
+        for (int i = 0; i < items.length; i++) {
             if (items[i] == null) {
                 items[i] = this.getHealthType();
             }
