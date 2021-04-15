@@ -78,7 +78,7 @@ public class RegionHandler implements Handler {
     public Region find(Location location) {
         return this.regions.stream()
                 .filter(region -> region.getCuboid() != null && region.getCuboid().contains(location))
-                .findFirst().orElseGet(() -> this.wildernessRegion);
+                .findFirst().orElse(this.wildernessRegion);
     }
 
 }

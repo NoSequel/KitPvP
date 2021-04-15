@@ -131,6 +131,6 @@ public class LauncherKit extends AbilityKit {
      */
     @Override
     public int getRequiredLevel() {
-        return 0;
+        return 2;
     }
 }

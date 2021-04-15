@@ -123,6 +123,6 @@ public class IntoxicatorKit extends AbilityKit {
      */
     @Override
     public int getRequiredLevel() {
-        return 1;
+        return 2;
     }
 }
