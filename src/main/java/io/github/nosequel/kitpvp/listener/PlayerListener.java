@@ -59,7 +59,7 @@ public class PlayerListener implements Listener {
     public void onBreak(BlockBreakEvent event) {
         final Player player = event.getPlayer();
 
-        if(!player.hasPermission("kitpvp.build") || player.getGameMode().equals(GameMode.CREATIVE)) {
+        if(!player.hasPermission("kitpvp.build") || !player.getGameMode().equals(GameMode.CREATIVE)) {
             event.setCancelled(true);
         }
     }
@@ -68,7 +68,7 @@ public class PlayerListener implements Listener {
     public void onPlace(BlockPlaceEvent event) {
         final Player player = event.getPlayer();
 
-        if(!player.hasPermission("kitpvp.build") || player.getGameMode().equals(GameMode.CREATIVE)) {
+        if(!player.hasPermission("kitpvp.build") || !player.getGameMode().equals(GameMode.CREATIVE)) {
             event.setCancelled(true);
         }
     }
