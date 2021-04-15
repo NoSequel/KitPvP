@@ -3,9 +3,11 @@ package io.github.nosequel.kitpvp.loadout.impl;
 import io.github.nosequel.kitpvp.handler.HandlerManager;
 import io.github.nosequel.kitpvp.kits.KitHandler;
 import io.github.nosequel.kitpvp.kits.menu.KitSelectorMenu;
+import io.github.nosequel.kitpvp.level.LevelHandler;
 import io.github.nosequel.kitpvp.loadout.Loadout;
 import io.github.nosequel.kitpvp.loadout.LoadoutHandler;
 import io.github.nosequel.kitpvp.loadout.LoadoutType;
+import io.github.nosequel.kitpvp.profile.ProfileHandler;
 import io.github.nosequel.kitpvp.util.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,10 +17,12 @@ import org.bukkit.inventory.ItemStack;
 public class SpawnLoadout extends Loadout {
 
     private final KitHandler kitHandler;
+    private final ProfileHandler profileHandler;
 
     public SpawnLoadout(HandlerManager handlerManager) {
         super(handlerManager.find(LoadoutHandler.class));
         this.kitHandler = handlerManager.find(KitHandler.class);
+        this.profileHandler = handlerManager.find(ProfileHandler.class);
     }
 
     /**
@@ -47,7 +51,7 @@ public class SpawnLoadout extends Loadout {
                 null,
                 new ItemBuilder(Material.WATCH)
                         .setDisplayName(ChatColor.GOLD + "Select a Kit")
-                        .setAction(event -> new KitSelectorMenu(player, this.kitHandler).updateMenu(), player).get(),
+                        .setAction(event -> new KitSelectorMenu(player, this.kitHandler, this.profileHandler).updateMenu(), player).get(),
         });
     }
 }

@@ -1,8 +1,8 @@
 package io.github.nosequel.kitpvp.kits.menu;
 
-import com.sun.org.apache.xpath.internal.operations.String;
 import io.github.nosequel.kitpvp.kits.Kit;
 import io.github.nosequel.kitpvp.kits.KitHandler;
+import io.github.nosequel.kitpvp.profile.ProfileHandler;
 import io.github.nosequel.menus.MenuHandler;
 import io.github.nosequel.menus.button.Button;
 import io.github.nosequel.menus.button.ButtonBuilder;
@@ -14,17 +14,21 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class KitSelectorMenu extends Menu {
 
     private final KitHandler kitHandler;
+    private final ProfileHandler profileHandler;
 
-    public KitSelectorMenu(Player player, KitHandler kitHandler) {
+    public KitSelectorMenu(Player player, KitHandler kitHandler, ProfileHandler profileHandler) {
         super(player, "Select a Kit", 36);
         this.kitHandler = kitHandler;
+        this.profileHandler = profileHandler;
     }
 
     @Override
@@ -32,22 +36,38 @@ public class KitSelectorMenu extends Menu {
         final AtomicInteger index = new AtomicInteger();
         final List<Button> buttons = new ArrayList<>();
 
-        for (Kit kit : kitHandler.getKits()) {
+        final Player player = this.getPlayer();
+        final int level = this.profileHandler.findOrMake(player.getUniqueId(), player.getName()).getLevel();
+
+        final List<Kit> kits = new ArrayList<>(kitHandler.getKits());
+        kits.sort(Comparator.comparingInt(Kit::getRequiredLevel));
+
+        for (Kit kit : kits) {
             final Function<ClickType, Boolean> action = type -> {
+                if (level < kit.getRequiredLevel()) {
+                    player.sendMessage(ChatColor.RED + "You must be at least level " + kit.getRequiredLevel() + " to use this kit.");
+                    return true;
+                }
+
                 kit.equip(this.getPlayer());
                 this.getPlayer().closeInventory();
 
                 return true;
             };
 
-            buttons.add(new ButtonBuilder(index.getAndIncrement(), kit.getIcon())
-                    .displayName(ChatColor.GREEN + kit.getKitName())
-                    .lore(
-                            Arrays.stream(kit.getDescription())
-                                    .map(line -> ChatColor.GRAY + line)
-                                    .toArray(java.lang.String[]::new)
+            final List<String> lore = Arrays.stream(kit.getDescription()).map(line -> ChatColor.GRAY + line).collect(Collectors.toList());
 
-                    ).action(action)
+            if (level < kit.getRequiredLevel()) {
+                lore.addAll(Arrays.asList(
+                        "",
+                        ChatColor.RED + "You must be level " + kit.getRequiredLevel() + " to unlock this kit."
+                ));
+            }
+
+            buttons.add(new ButtonBuilder(index.getAndIncrement(), kit.getIcon())
+                    .displayName((level >= kit.getRequiredLevel() ? ChatColor.GREEN : ChatColor.RED) + kit.getKitName())
+                    .lore(lore.toArray(new String[0]))
+                    .action(action)
             );
         }
 

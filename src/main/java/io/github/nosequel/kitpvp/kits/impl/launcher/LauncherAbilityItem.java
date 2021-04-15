@@ -49,9 +49,9 @@ public class LauncherAbilityItem extends ItemAbility {
                 if (entity instanceof Player && !entity.getMetadata("protected").iterator().next().asBoolean()) {
                     final Player target = (Player) entity;
 
+                    target.damage(0.1D, player);
                     target.setVelocity(new Vector().setY(1).multiply(1.5));
                     target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 5*20, 10));
-                    target.damage(0.1D, player);
                     target.sendMessage(ChatColor.GRAY + ChatColor.ITALIC.toString() + "You have been launched by a launcher...");
                 }
             }
