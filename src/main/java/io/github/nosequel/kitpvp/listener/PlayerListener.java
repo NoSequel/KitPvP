@@ -5,9 +5,12 @@ import io.github.nosequel.kitpvp.loadout.Loadout;
 import io.github.nosequel.kitpvp.loadout.LoadoutHandler;
 import io.github.nosequel.kitpvp.loadout.LoadoutType;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
@@ -51,4 +54,23 @@ public class PlayerListener implements Listener {
         loadout.equipLoadout(player);
         player.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
     }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        final Player player = event.getPlayer();
+
+        if(!player.hasPermission("kitpvp.build") || player.getGameMode().equals(GameMode.CREATIVE)) {
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event) {
+        final Player player = event.getPlayer();
+
+        if(!player.hasPermission("kitpvp.build") || player.getGameMode().equals(GameMode.CREATIVE)) {
+            event.setCancelled(true);
+        }
+    }
+
 }
