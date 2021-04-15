@@ -43,7 +43,7 @@ public abstract class Kit {
 
         items[0] = this.getSword();
 
-        for (int i = 0; i < items.length; i++) {
+        for (byte i = 0; i < items.length; i++) {
             if (items[i] == null) {
                 items[i] = this.getHealthType();
             }
