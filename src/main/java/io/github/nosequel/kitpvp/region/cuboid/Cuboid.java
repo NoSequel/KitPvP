@@ -1,6 +1,5 @@
 package io.github.nosequel.kitpvp.region.cuboid;
 
-
 import com.google.gson.annotations.Expose;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -63,15 +62,6 @@ public class Cuboid {
     }
 
     /**
-     * Get the corners of the cuboid
-     *
-     * @return the corners in a location data format
-     */
-    public LocationData getCorners() {
-        return new LocationData();
-    }
-
-    /**
      * Create all locations within the cuboid
      *
      * @return the locations
@@ -88,33 +78,5 @@ public class Cuboid {
         }
 
         return locations;
-    }
-
-    /**
-     * Check if the cuboid contains a location
-     *
-     * @param location the location to check
-     * @return whether it's in the cuboid or not
-     */
-    public boolean contains(Location location) {
-        return (location.getBlockX() >= this.minX && location.getBlockX() <= maxX)
-                && (location.getBlockY() >= this.minY && location.getBlockY() <= this.maxY)
-                && (location.getBlockZ() >= this.minZ && location.getBlockZ() <= this.maxZ);
-    }
-
-
-    @Getter
-    public class LocationData {
-
-        private final Location minCorner;
-        private final Location maxCorner;
-
-        /**
-         * Constructor to make a new location data object
-         */
-        public LocationData() {
-            this.minCorner = new Location(Bukkit.getWorld(worldName), minX, minY, minZ);
-            this.maxCorner = new Location(Bukkit.getWorld(worldName), maxX, maxY, maxZ);
-        }
     }
 }
