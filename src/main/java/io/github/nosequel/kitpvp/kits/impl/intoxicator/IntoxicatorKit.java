@@ -1,7 +1,6 @@
-package io.github.nosequel.kitpvp.kits.impl.kit;
+package io.github.nosequel.kitpvp.kits.impl.intoxicator;
 
 import io.github.nosequel.kitpvp.kits.AbilityKit;
-import io.github.nosequel.kitpvp.kits.Kit;
 import io.github.nosequel.kitpvp.kits.KitHandler;
 import io.github.nosequel.kitpvp.kits.ability.Ability;
 import io.github.nosequel.kitpvp.util.ItemBuilder;
@@ -11,9 +10,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class LauncherKit extends AbilityKit {
+public class IntoxicatorKit extends AbilityKit {
 
-    public LauncherKit(KitHandler kitHandler) {
+    /**
+     * Constructor to make a new ability kit object
+     *
+     * @param kitHandler the handler to register it to
+     */
+    public IntoxicatorKit(KitHandler kitHandler) {
         super(kitHandler);
     }
 
@@ -24,8 +28,8 @@ public class LauncherKit extends AbilityKit {
      */
     @Override
     public Ability[] getAbilities() {
-        return new Ability[] {
-                new LauncherAbilityItem(this.getKitHandler())
+        return new Ability[]{
+            new IntoxicatorAbility(getKitHandler())
         };
     }
 
@@ -36,7 +40,7 @@ public class LauncherKit extends AbilityKit {
      */
     @Override
     public String getKitName() {
-        return "Launcher";
+        return "Intoxicator";
     }
 
     /**
@@ -47,9 +51,9 @@ public class LauncherKit extends AbilityKit {
     @Override
     public String[] getDescription() {
         return new String[]{
-                "The launcher kit is a kit which",
-                "launches everyone within a 8-",
-                "block radius up into the air.",
+                "The intoxicator kit gives",
+                "everyone in a range of 15",
+                "blocks nausea and hunger."
         };
     }
 
@@ -61,7 +65,8 @@ public class LauncherKit extends AbilityKit {
     @Override
     public ItemStack getSword() {
         return new ItemBuilder(Material.DIAMOND_SWORD)
-                .addEnchantment(Enchantment.DURABILITY, 5).get();
+                .addEnchantment(Enchantment.DAMAGE_ALL, 1)
+                .addEnchantment(Enchantment.DURABILITY, 2).get();
     }
 
     /**
@@ -72,22 +77,10 @@ public class LauncherKit extends AbilityKit {
     @Override
     public ItemStack[] getArmor() {
         return new ItemStack[]{
-                new ItemBuilder(Material.CHAINMAIL_BOOTS)
-                        .addEnchantment(Enchantment.PROTECTION_FALL, 2)
-                        .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1)
-                        .addEnchantment(Enchantment.DURABILITY, 5).get(),
-
-                new ItemBuilder(Material.GOLD_LEGGINGS)
-                        .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1)
-                        .addEnchantment(Enchantment.DURABILITY, 5).get(),
-
-                new ItemBuilder(Material.LEATHER_CHESTPLATE)
-                        .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1)
-                        .addEnchantment(Enchantment.DURABILITY, 5).get(),
-
-                new ItemBuilder(Material.LEATHER_HELMET)
-                        .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1)
-                        .addEnchantment(Enchantment.DURABILITY, 5).get(),
+                new ItemStack(Material.DIAMOND_BOOTS),
+                new ItemStack(Material.CHAINMAIL_LEGGINGS),
+                new ItemStack(Material.CHAINMAIL_CHESTPLATE),
+                new ItemStack(Material.DIAMOND_HELMET)
         };
     }
 
@@ -108,7 +101,7 @@ public class LauncherKit extends AbilityKit {
      */
     @Override
     public ItemStack getIcon() {
-        return new ItemStack(Material.GLOWSTONE_DUST);
+        return new ItemStack(Material.COOKED_BEEF);
     }
 
     /**
@@ -119,9 +112,7 @@ public class LauncherKit extends AbilityKit {
     @Override
     public PotionEffect[] getPotionEffects() {
         return new PotionEffect[]{
-                new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2),
-                new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 1),
-                new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 1)
+                new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1)
         };
     }
 }

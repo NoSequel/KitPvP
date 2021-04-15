@@ -2,6 +2,9 @@ package io.github.nosequel.kitpvp.kits.ability;
 
 import io.github.nosequel.kitpvp.kits.KitHandler;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 public abstract class ItemAbility extends ListenerAbility {
 
@@ -9,6 +12,14 @@ public abstract class ItemAbility extends ListenerAbility {
         super(kitHandler);
     }
 
+    @EventHandler
+    public void onInteract(PlayerInteractEvent event) {
+        final Player player = event.getPlayer();
+
+        if (this.isEquipped(player) && event.getItem() != null && event.getItem().getType().equals(this.getMaterial())) {
+            this.handle(player);
+        }
+    }
     /**
      * Get the material of the item
      *

@@ -17,7 +17,6 @@ public class DeathListener implements Listener {
         event.setDeathMessage(null);
 
         if (killer != null) {
-
             player.sendMessage(ChatColor.DARK_PURPLE + "You have been killed by " + ChatColor.LIGHT_PURPLE + killer.getName() + ChatColor.DARK_PURPLE + ".");
             killer.sendMessage(ChatColor.DARK_PURPLE + "You have killed " + ChatColor.LIGHT_PURPLE + player.getName() + ChatColor.DARK_PURPLE + " and have gained 5 points.");
         } else {

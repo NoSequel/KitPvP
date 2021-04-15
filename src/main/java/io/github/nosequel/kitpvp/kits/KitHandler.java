@@ -4,7 +4,8 @@ import io.github.nosequel.kitpvp.handler.Handler;
 import io.github.nosequel.kitpvp.kits.ability.Ability;
 import io.github.nosequel.kitpvp.kits.ability.ListenerAbility;
 import io.github.nosequel.kitpvp.kits.impl.DefaultKit;
-import io.github.nosequel.kitpvp.kits.impl.kit.LauncherKit;
+import io.github.nosequel.kitpvp.kits.impl.intoxicator.IntoxicatorKit;
+import io.github.nosequel.kitpvp.kits.impl.launcher.LauncherKit;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -39,6 +40,7 @@ public class KitHandler implements Handler {
     public void load() {
         this.register(new DefaultKit(this));
         this.register(new LauncherKit(this));
+        this.register(new IntoxicatorKit(this));
     }
 
     /**

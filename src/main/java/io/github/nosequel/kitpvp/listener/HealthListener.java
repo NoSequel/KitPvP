@@ -4,8 +4,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 public class HealthListener implements Listener {
 
@@ -18,10 +20,19 @@ public class HealthListener implements Listener {
             return;
         }
 
-        if(player.getHealth() != player.getMaxHealth() || player.getFoodLevel() != 20) {
+        if (player.getHealth() != player.getMaxHealth() || player.getFoodLevel() != 20) {
             player.getItemInHand().setType(Material.BOWL);
             player.setHealth(Math.min(player.getMaxHealth(), player.getHealth() + 6.5F));
             player.setFoodLevel(20);
+        }
+    }
+
+    @EventHandler
+    public void onHunger(FoodLevelChangeEvent event) {
+        final Player player = (Player) event.getEntity();
+
+        if (event.getFoodLevel() < player.getFoodLevel() && !player.hasPotionEffect(PotionEffectType.HUNGER)) {
+            event.setFoodLevel(20);
         }
     }
 }

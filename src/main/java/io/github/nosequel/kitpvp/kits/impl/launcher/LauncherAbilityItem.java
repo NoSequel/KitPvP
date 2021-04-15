@@ -1,4 +1,4 @@
-package io.github.nosequel.kitpvp.kits.impl.kit;
+package io.github.nosequel.kitpvp.kits.impl.launcher;
 
 import io.github.nosequel.kitpvp.kits.Kit;
 import io.github.nosequel.kitpvp.kits.KitHandler;
@@ -6,23 +6,12 @@ import io.github.nosequel.kitpvp.kits.ability.ItemAbility;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
 public class LauncherAbilityItem extends ItemAbility {
 
     public LauncherAbilityItem(KitHandler kitHandler) {
         super(kitHandler);
-    }
-
-    @EventHandler
-    public void onInteract(PlayerInteractEvent event) {
-        final Player player = event.getPlayer();
-
-        if (this.isEquipped(player) && event.getItem() != null && event.getItem().getType().equals(this.getMaterial())) {
-            this.handle(player);
-        }
     }
 
     /**
@@ -32,7 +21,7 @@ public class LauncherAbilityItem extends ItemAbility {
      */
     @Override
     public long getCooldownDuration() {
-        return 0;
+        return 30000;
     }
 
     /**
@@ -51,14 +40,19 @@ public class LauncherAbilityItem extends ItemAbility {
      * @param player the player to handle it for
      */
     @Override
-    public void handle(Player player) {
-        super.handle(player);
+    public boolean handle(Player player) {
+        if (super.handle(player)) {
+            for (Entity entity : player.getNearbyEntities(8, 8, 8)) {
+                if (entity instanceof Player && !entity.getMetadata("protected").iterator().next().asBoolean()) {
+                    final Player target = (Player) entity;
 
-        for(Entity entity : player.getNearbyEntities(8, 8, 8)) {
-            if(entity instanceof Player && !entity.getMetadata("protected").iterator().next().asBoolean()) {
-                entity.setVelocity(new Vector().setY(1).multiply(1.7));
+                    target.setVelocity(new Vector().setY(1).multiply(1.7));
+                    target.damage(0.1D, player);
+                }
             }
         }
+
+        return true;
     }
 
     /**
